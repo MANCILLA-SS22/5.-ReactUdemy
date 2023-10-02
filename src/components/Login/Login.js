@@ -39,11 +39,9 @@ function Login(props) {
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, initialState);
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, initialState);
-
-  const authCtx = useContext(AuthContext);
-
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const authCtx = useContext(AuthContext);
 
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
@@ -60,7 +58,6 @@ function Login(props) {
     }
 
     return res; // It's important to keep in mind that at the very first side-effect execution. this clean-up function won't be executed. But after that, the clean-up funcion will be executed before every new side-effect execution.
-
   }, [emailIsValid, passwordIsValid]); //If neither of the three changed, this effect function won't run.
 
   function emailChangeHandler(event){
@@ -96,8 +93,9 @@ function Login(props) {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <Input ref={emailInputRef} id="email" label="E-Mail" type="email" isValid={emailIsValid} value={emailState.value} onChange={emailChangeHandler} onBlur={validateEmailHandler}/>
-        <Input ref={passwordInputRef} id="password" label="Password" type="password" isValid={passwordIsValid} value={passwordState.value} onChange={passwordChangeHandler} onBlur={validatePasswordHandler}/>
+        <Input ref={emailInputRef} id="email" label="E-Mail" type="email" onChange={emailChangeHandler} onBlur={validateEmailHandler} isValid={emailIsValid} value={emailState.value}/>
+        <Input ref={passwordInputRef} id="password" label="Password" type="password" onChange={passwordChangeHandler} onBlur={validatePasswordHandler} isValid={passwordIsValid} value={passwordState.value}/>
+        
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn}>Login</Button>
         </div>

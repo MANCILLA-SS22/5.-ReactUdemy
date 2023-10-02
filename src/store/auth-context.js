@@ -1,10 +1,12 @@
 import React, { createContext,  useState, useEffect } from 'react';
 
-const AuthContext = createContext({
+/* const AuthContext = createContext({
   isLoggedIn: false,
   onLogout: function(){},
   onLogin: function (email, password){}
-});
+}); */
+
+const AuthContext = createContext();
 
 export function AuthContextProvider(props){
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,8 +29,14 @@ export function AuthContextProvider(props){
     setIsLoggedIn(true);
   };
 
+  const date = {
+    isLoggedIn: isLoggedIn, 
+    onLogout: logoutHandler, 
+    onLogin: loginHandler
+  }
+
   return (
-    <AuthContext.Provider value={{isLoggedIn: isLoggedIn, onLogout: logoutHandler, onLogin: loginHandler}}>
+    <AuthContext.Provider value={date}>
       {props.children}
     </AuthContext.Provider>
   );
